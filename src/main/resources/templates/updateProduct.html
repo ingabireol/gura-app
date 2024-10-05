@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-4">
+    <a class="navbar-brand" th:href="@{/admin/home}">Gura</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/home}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/product-register}">New Product</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/admin/product-all}">All Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/orders-all}">Manage Orders</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav"><!-- Logout at the right end -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h1>Update Product</h1>
+    <form th:action="@{/admin/product-register}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" id="price" th:field="*{price}" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="quantity" th:field="*{quantity}" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" class="form-control" id="category" th:field="*{category}" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="picture">Picture</label>
+            <input type="file" class="form-control-file" id="picture" name="picture">
+            <small class="form-text text-muted">Leave this field blank if you don't want to change the picture.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </form>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

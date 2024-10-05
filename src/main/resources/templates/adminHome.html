@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .product-card {
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-4">
+    <a class="navbar-brand" th:href="@{/admin/home}">Gura</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/admin/home}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/product-register}">New Product</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/product-all}">All Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/admin/orders-all}">Manage Orders</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav"><!-- Logout at the right end -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+        </ul>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4" th:text="${welcomeMessage}"></h1>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="product : ${productList}">
+            <div class="card product-card">
+                <img th:src="@{'/image-product/' +${product.picture}}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.name}"></h5>
+                    <p class="card-text">Price: $<span th:text="${product.price}"></span></p>
+                    <a th:href="@{/admin/product-details/{id}(id=${product.id})}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

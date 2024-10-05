@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        .card-img-top {
+            width: 40%;
+            height: 40%;
+            object-fit: cover;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>User Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-4">
+    <a class="navbar-brand" th:href="@{/admin/home}">Gura</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/user/home}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/carts}">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/orders}">Order History</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav"><!-- Logout at the right end -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- Products Section -->
+<div class="container mt-4">
+    <h2>Available Products</h2>
+    <form th:action="@{/user/filter-products}" method="post" class="d-flex justify-content-center mb-4">
+        <div class="form-group">
+            <select class="form-control form-control-sm" id="categoryFilter" name="category">
+                <option value="all" th:selected="${category == null || category.equalsIgnoreCase('all')}">All</option>
+                <option value="food" th:selected="${category != null && category.equalsIgnoreCase('food')}">Food</option>
+                <option value="drink" th:selected="${category != null && category.equalsIgnoreCase('drink')}">Drinks</option>
+                <option value="clothes" th:selected="${category != null && category.equalsIgnoreCase('clothes')}">Clothes</option>
+                <option value="accessories" th:selected="${category != null && category.equalsIgnoreCase('accessories')}">Accessories</option>
+                <option value="electronic" th:selected="${category != null && category.equalsIgnoreCase('electronic')}">Electronic</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    </form>
+    <div th:if="${message}" class="alert alert-info" role="alert" th:text="${message}"></div>
+    <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="product : ${recentProducts}">
+            <div class="card">
+                <img  th:src="@{'/image-product/' + ${product.picture}}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+                    <p class="card-text" th:text="${product.description}">Description</p>
+                    <p class="card-text">Price: $<span th:text="${product.price}">99.99</span></p>
+                    <a  th:href="@{'/user/product-addToCart?id=' + ${product.id}}"> <button class="btn btn-primary">Add to Cart</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
